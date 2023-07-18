@@ -21,12 +21,19 @@ The player1 sign is 'O'
 
 There is a single controller in the project that handles the requests for the game
 
-- **POST**    `http://localhost:3000/new` asks the server for a new game, the server returns  a game id
+- **POST**    `http://localhost:3000/new` asks the server for a new game, the server returns  a game id. The gameId is needed to initiate a new game, after that player1 and player2 will need the game id to make a move in the game.
+example for response: 
+
+    {
+        "gameId": 2
+    }
+    
 - **POST**  `http://localhost:3000/game/{gameId}` make a move in the game
 The Body of the request contains 2 parametes, the player number and the position number
-example for request : 
 
-    http://localhost:3000/game/1
+    example for response: 
+
+   **POST** http://localhost:3000/game/1
     {
     
     "pos"  :  "8",
@@ -34,6 +41,31 @@ example for request :
     "player"  :  "player1"
     
     }
+
+The game will return the board and the status of the game.
+Example for response: 
+
+{
+    "game": {
+        "gameId": 1,
+        "NextTurn": "player2",
+        "pos1": "X",
+        "pos2": "O",
+        "pos3": "",
+        "pos4": "X",
+        "pos5": "O",
+        "pos6": "",
+        "pos7": "",
+        "pos8": "X",
+        "pos9": "",
+        "status": "in progress",
+        "winner": ""
+    }
+}
+
+The game also indicate who needs to make the next  move.
+And if there is a winner it will update who the winner and the status will change to "Ended".
+
 
 ### Services
 **GameService** - Handles all the game creation and movements in the game
